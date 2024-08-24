@@ -1,14 +1,3 @@
-typedef struct		s_node {
-	int				val;
-	struct s_node	*prev;
-	struct s_node	*next;
-}					t_node;
-
-typedef struct {
-	int		len;
-	t_node	*head
-}			t_stk;
-
 t_node	*node_create(int val)
 {
 	t_node	*res;
@@ -62,11 +51,3 @@ void	stk_free_nodes(t_stk *stk)
 	while (stk->len)
 		free(stk_pop_node(stk));
 }
-
-typedef enum {
-	OP_PA, OP_PB,
-	OP_SA, OP_SB, OP_SS,
-	OP_RA, OP_RB, OP_RR,
-	OP_RRA, OP_RRB, OP_RRR,
-	NB_OP
-}	t_op;
