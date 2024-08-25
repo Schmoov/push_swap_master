@@ -1,0 +1,15 @@
+
+=================================================================
+==2970684==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 40 byte(s) in 1 object(s) allocated from:
+    #0 0x49a20d in malloc (/home/parden/Github/push_swap_master/test/bin/parse.memtest+0x49a20d)
+    #1 0x4cb50b in parse_and_compress /home/parden/Github/push_swap_master/src/parse.c:78:15
+    #2 0x4cb9cc in parse_and_compress_parse_impl /home/parden/Github/push_swap_master/test/src/parse.memtest.c:20:13
+    #3 0x7f817756827a in criterion_internal_test_main /home/tree/Criterion/build/../src/core/test.c:94:13
+    #4 0x4cb5e7 in parse_and_compress_parse_jmp /home/parden/Github/push_swap_master/test/src/parse.memtest.c:4:1
+    #5 0x7f8177566849 in run_test_child /home/tree/Criterion/build/../src/core/runner_coroutine.c:230:9
+    #6 0x7f8177578a92 in bxfi_main /home/tree/Criterion/build/../subprojects/boxfort/src/sandbox.c:57:12
+    #7 0x7f8177232d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+SUMMARY: AddressSanitizer: 40 byte(s) leaked in 1 allocation(s).

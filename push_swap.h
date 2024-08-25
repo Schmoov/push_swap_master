@@ -9,7 +9,7 @@ typedef struct		s_node {
 
 typedef struct {
 	int		len;
-	t_node	*head
+	t_node	*head;
 }			t_stk;
 
 t_node	*node_create(int val);
@@ -26,3 +26,9 @@ typedef enum {
 	OP_RRA, OP_RRB, OP_RRR,
 	NB_OP
 }	t_op;
+
+
+bool	ps_parse(int *res, char **nums, int size);
+bool	compress(int *res, int size);
+int	*parse_and_compress(char **nums, int size);
+int main(int argc, char **argv);

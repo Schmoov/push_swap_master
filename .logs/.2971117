@@ -1,0 +1,19 @@
+=================================================================
+==2971117==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000004cb2fe bp 0x7ffec54ec810 sp 0x7ffec54ec7e0 T0)
+==2971117==The signal is caused by a READ memory access.
+==2971117==Hint: address points to the zero page.
+    #0 0x4cb2fe in ps_atoi /home/parden/Github/push_swap_master/src/parse.c:28:6
+    #1 0x4cb29e in ps_parse /home/parden/Github/push_swap_master/src/parse.c:54:12
+    #2 0x4cb537 in parse_and_compress /home/parden/Github/push_swap_master/src/parse.c:81:7
+    #3 0x4ccfea in parse_and_compress_invalid_strings_impl /home/parden/Github/push_swap_master/test/src/parse.memtest.c:70:13
+    #4 0x7f37b180d27a in criterion_internal_test_main /home/tree/Criterion/build/../src/core/test.c:94:13
+    #5 0x4cce57 in parse_and_compress_invalid_strings_jmp /home/parden/Github/push_swap_master/test/src/parse.memtest.c:64:1
+    #6 0x7f37b180b849 in run_test_child /home/tree/Criterion/build/../src/core/runner_coroutine.c:230:9
+    #7 0x7f37b181da92 in bxfi_main /home/tree/Criterion/build/../subprojects/boxfort/src/sandbox.c:57:12
+    #8 0x7f37b14d7d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+    #9 0x7f37b14d7e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+    #10 0x41f344 in _start (/home/parden/Github/push_swap_master/test/bin/parse.memtest+0x41f344)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/parden/Github/push_swap_master/src/parse.c:28:6 in ps_atoi
+==2971117==ABORTING

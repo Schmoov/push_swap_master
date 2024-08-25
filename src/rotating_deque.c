@@ -1,3 +1,5 @@
+#include "push_swap.h"
+
 t_node	*node_create(int val)
 {
 	t_node	*res;
@@ -5,7 +7,7 @@ t_node	*node_create(int val)
 	res = malloc(sizeof(t_node));
 	res->val = val;
 	res->next = res;
-	res->prev = prev;
+	res->prev = res;
 	return (res);
 }
 

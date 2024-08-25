@@ -1,5 +1,13 @@
 #include "push_swap.h"
 
+static int	cmp(int *a, int *b)
+{
+	if (*a > *b)
+		return (1);
+	if (*a < *b)
+		return (-1);
+	return (0);
+}
 
 static bool	is_int(long long n)
 {
@@ -33,12 +41,12 @@ static int	ps_atoi(char *nptr, bool *err)
 		i++;
 	}
 	res *= sign;
-	if (str[i])
-		err = true;
+	if (nptr[i] || !is_int(res))
+		*err = true;
 	return (res);
 }
 
-bool	parse(int *res, char **nums, int size)
+bool	ps_parse(int *res, char **nums, int size)
 {
 	int		i;
 	bool	err;
@@ -53,18 +61,22 @@ bool	parse(int *res, char **nums, int size)
 	return (!err);
 }
 
-void	compress(int *res, int size)
+bool	compress(int *res, int size)
 {
 	int	*dup;
 
 	dup = (int *)malloc(size * sizeof(int));
 	if (!dup)
-		return ;
+		return (false);
 	ft_memcpy(dup, res, size * sizeof(int));
 	qsort(dup, size, sizeof(int), cmp);
+	for (int i = 0; i < size - 1; i++)
+		if (dup[i] == dup[i + 1])
+			return (free(dup), false);
 	for (int i = 0; i < size; i++)
-		res[i] = (bsearch(res + i, dup, size, sizeof(int), cmp) - dup);
+		res[i] = ((int *)bsearch(res + i, dup, size, sizeof(int), cmp) - dup);
 	free(dup);
+	return (true);
 }
 
 int	*parse_and_compress(char **nums, int size)
@@ -74,20 +86,9 @@ int	*parse_and_compress(char **nums, int size)
 	res = (int *)malloc(size * sizeof(int));
 	if (!res)
 		return (NULL);
-	if (!parse(res, nums, size))
+	if (!ps_parse(res, nums, size))
 		return (free(res), NULL);
-	compress(res, size);
-	if (!res)
-		return (NULL);
+	if (!compress(res, size))
+		return (free(res), NULL);
 	return (res);
-}
-
-int main(int argc, char **argv)
-{
-	t_stk	stk_a;
-	t_stk	stk_b;
-
-	memset(stk_a, 0, sizeof(t_stk));
-	memset(stk_b, 0, sizeof(t_stk));
-	parse(&stk_a, argv + 1, argc - 1);
 }
