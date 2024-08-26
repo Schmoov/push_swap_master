@@ -1,10 +1,10 @@
 #include "push_swap.h"
 
-static int	cmp(int *a, int *b)
+static int	cmp(const void *a, const void *b)
 {
-	if (*a > *b)
+	if (*(int *)a > *(int *)b)
 		return (1);
-	if (*a < *b)
+	if (*(int *)a < *(int *)b)
 		return (-1);
 	return (0);
 }

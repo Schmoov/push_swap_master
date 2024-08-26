@@ -29,27 +29,25 @@ t_node	*stk_pop_node(t_stk *stk)
 	t_node	*res;
 
 	res = stk->head;
-	res->next->prev = res->prev;
-	res->prev->next = res->next;
-	stk->head = res->next;
-	res->next = res;
-	res->prev = res;
+	if (stk->len > 1)
+	{
+		res->next->prev = res->prev;
+		res->prev->next = res->next;
+		stk->head = res->next;
+		res->next = res;
+		res->prev = res;
+	}
+	else
+		stk->head = NULL;
 	(stk->len)--;
 	return (res);
-}
-
-void	stk_rot(t_stk *stk)
-{
-	stk->head = stk->head->next;
-}
-
-void	stk_rrot(t_stk *stk)
-{
-	stk->head = stk->head->prev;
 }
 
 void	stk_free_nodes(t_stk *stk)
 {
 	while (stk->len)
+	{
+		ft_printf("%d\n", stk->head->val);
 		free(stk_pop_node(stk));
+	}
 }
