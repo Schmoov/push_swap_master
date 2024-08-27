@@ -58,51 +58,48 @@ void	solve_brute_force(int *parsed, int size)
 	free(sol);
 }
 
-bool	is_pa_stupid(t_op *sol, int curr)
-{
-	int count = 0;
-
-	for (int i = 0; i < curr; i++)
-	{
-		if (sol[i] == OP_PB)
-			count++;
-		if (sol[i] == OP_PA)
-			count--;
-	}
-	return (count <= 0);
-}
-
-bool	is_stupid(t_op *sol, int curr)
+bool	is_stupid(t_op *sol, int curr, int a_len, int b_len)
 {
 	switch (sol[curr])
 	{
 	case OP_SA:
-		return(curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS));
+		return((curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS))
+			|| a_len < 2);
 	case OP_SB:
-		return(curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS));
+		return((curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS))
+			|| b_len < 2);
 	case OP_SS:
-		return(curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS));
+		return((curr && (sol[curr-1] == OP_SA || sol[curr-1] == OP_SB || sol[curr-1] == OP_SS))
+			|| a_len < 2 || b_len < 2);
 
 	case OP_RA:
-		return(curr && (sol[curr-1] == OP_RRA || sol[curr-1] == OP_RB || sol[curr-1] == OP_RRR));
+		return((curr && (sol[curr-1] == OP_RRA || sol[curr-1] == OP_RB || sol[curr-1] == OP_RRR))
+			|| a_len < 2);
 	case OP_RRA:
-		return(curr && (sol[curr-1] == OP_RA || sol[curr-1] == OP_RRB || sol[curr-1] == OP_RR));
+		return((curr && (sol[curr-1] == OP_RA || sol[curr-1] == OP_RRB || sol[curr-1] == OP_RR))
+			|| a_len < 3);
 	case OP_RB:
-		return(curr && (sol[curr-1] == OP_RRB || sol[curr-1] == OP_RA || sol[curr-1] == OP_RRR));
+		return((curr && (sol[curr-1] == OP_RRB || sol[curr-1] == OP_RA || sol[curr-1] == OP_RRR))
+			|| b_len < 2);
 	case OP_RRB:
-		return(curr && (sol[curr-1] == OP_RB || sol[curr-1] == OP_RRA || sol[curr-1] == OP_RR));
+		return((curr && (sol[curr-1] == OP_RB || sol[curr-1] == OP_RRA || sol[curr-1] == OP_RR))
+			|| b_len < 3);
 	case OP_RR:
-		return(curr && (sol[curr-1] == OP_RRA || sol[curr-1] == OP_RRB || sol[curr-1] == OP_RRR));
+		return((curr && (sol[curr-1] == OP_RRA || sol[curr-1] == OP_RRB || sol[curr-1] == OP_RRR))
+			|| a_len < 2 || b_len < 2);
 	case OP_RRR:
-		return(curr && (sol[curr-1] == OP_RA || sol[curr-1] == OP_RB || sol[curr-1] == OP_RR));
+		return((curr && (sol[curr-1] == OP_RA || sol[curr-1] == OP_RB || sol[curr-1] == OP_RR))
+			|| a_len < 2 || b_len < 2);
 	case OP_PA:
-		return(is_pa_stupid(sol, curr));
+		return(b_len < 0);
+	case OP_PB:
+		return(a_len < 0);
 	default:
-		return (false);
+		__builtin_unreachable();
 	}
 }
 
-bool	solve_backtrack_4real(int *parsed, int size, t_op *sol, int max_depth, int curr_depth)
+bool	solve_backtrack_4real(int *parsed, int size, t_op *sol, int max_depth, int curr_depth, int b_len)
 {
 	if (curr_depth == max_depth)
 		return (is_solution(parsed, size, sol, max_depth));
@@ -110,8 +107,11 @@ bool	solve_backtrack_4real(int *parsed, int size, t_op *sol, int max_depth, int 
 	for (t_op op = 0; op < NB_OP; op++)
 	{
 		sol[curr_depth] = op;
-		if (!is_stupid(sol, curr_depth))
-			if (solve_backtrack_4real(parsed, size, sol, max_depth, curr_depth + 1))
+		if (op == OP_PA) b_len--;
+		if (op == OP_PB) b_len+=2;
+		if (op == OP_SA) b_len--;
+		if (!is_stupid(sol, curr_depth, size - b_len, b_len))
+			if (solve_backtrack_4real(parsed, size, sol, max_depth, curr_depth + 1, b_len))
 				return (true);
 	}
 	sol[curr_depth] = -1;
@@ -125,7 +125,7 @@ bool	solve_backtrack_depth(int *parsed, int size, t_op **sol, int depth)
 	for (int i = 0; i < depth; i++)
 		(*sol)[i] = -1;
 
-	return (solve_backtrack_4real(parsed, size, *sol, depth, 0));
+	return (solve_backtrack_4real(parsed, size, *sol, depth, 0, 0));
 }
 
 void	solve_backtrack(int *parsed, int size)
