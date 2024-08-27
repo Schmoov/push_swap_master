@@ -1,11 +1,11 @@
-CC := cc -g
+CC := cc -O3
 CFLAGS := 
 
 NAME := push_swap
 LIBFT := libft/libft.a
 
 SRC_DIR := src/
-SRC := $(wildcard $(SRC_DIR)*.c)
+SRC := $(filter-out $(wildcard $(SRC_DIR)main*.c), $(wildcard $(SRC_DIR)*.c))
 
 OBJ_DIR := .obj/
 OBJ := $(patsubst $(SRC_DIR)%.c, $(OBJ_DIR)%.o, $(SRC))
@@ -24,10 +24,14 @@ ASAN_ENV := ASAN_OPTIONS=log_path=$(LOG_DIR):abort_on_error=1:allocator_may_retu
 
 all: $(NAME)
 
+debug : debug
 test: $(TEST_BIN)
 
 
-$(NAME): $(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT) src/main_ps.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+debug: src/main_debug.c $(OBJ) $(LIBFT) 
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c

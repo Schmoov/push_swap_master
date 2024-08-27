@@ -12,8 +12,6 @@ void	ps_op_pa(t_stk *a, t_stk *b)
 	if (!b->len)
 		return;
 	stk_push_node(a, stk_pop_node(b));
-	(b->len)--;
-	(a->len)++;
 }
 
 void	ps_op_pb(t_stk *a, t_stk *b)

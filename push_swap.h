@@ -48,6 +48,7 @@ void	stks_init(int *input, int input_len, t_stk *stk_a, t_stk *stk_b);
 void	stks_execute(t_op *moves, int moves_len, t_stk *stk_a, t_stk *stk_b);
 bool	stks_is_solved(t_stk *stk_a, t_stk *stk_b);
 void	stks_destroy(t_stk *stk_a, t_stk *stk_b);
+void	stks_print(t_stk *a, t_stk *b);
 
 
 void	ps_op_pa(t_stk *a, t_stk *b);
@@ -63,4 +64,5 @@ void	ps_op_rrb(t_stk *a, t_stk *b);
 void	ps_op_rrr(t_stk *a, t_stk *b);
 bool	is_solution(int *input, int input_len, t_op *moves, int moves_len);
 void    solve_brute_force(int *parsed, int size); 
+void	solve_backtrack(int *parsed, int size);
 #endif

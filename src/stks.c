@@ -58,3 +58,21 @@ void	stks_execute(t_op *moves, int moves_len, t_stk *stk_a, t_stk *stk_b)
 		i++;
 	}
 }
+
+void	stks_print(t_stk *a, t_stk *b)
+{
+	t_node	*tmp = a->head;
+	for (int i = 0; i < a->len; i++)
+	{
+		ft_printf("%d ", tmp->val);
+		tmp = tmp->next;
+	}
+	ft_printf("|");
+	tmp = b->head;
+	for (int i = 0; i < b->len; i++)
+	{
+		ft_printf("%d ", tmp->val);
+		tmp = tmp->next;
+	}
+	ft_printf("\n");
+}
