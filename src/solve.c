@@ -29,6 +29,14 @@ static t_op	*ll_to_op_arr(long long n)
 	return (res);
 }
 
+bool	is_sorted(int *parsed, int size)
+{
+	for (int i = 0; i < size - 1; i++)
+		if (parsed[i] > parsed[i+1])
+			return false;
+	return true;
+}
+
 void	print_sol(t_op *moves, int moves_len)
 {
 	int	i;
@@ -39,6 +47,7 @@ void	print_sol(t_op *moves, int moves_len)
 		ft_printf("%s\n", ps_op_to_str(moves[i]));
 		i++;
 	}
+//	ft_printf("---------------\n");
 }
 
 void	solve_brute_force(int *parsed, int size)
@@ -133,6 +142,12 @@ void	solve_backtrack(int *parsed, int size)
 	int		depth;
 	t_op	*sol;
 
+	if (is_sorted(parsed, size))
+	{
+//		ft_printf("Id\n");
+//		ft_printf("---------------\n");
+		return ;
+	}
 	depth = 1;
 
 	while (!solve_backtrack_depth(parsed, size, &sol, depth))
