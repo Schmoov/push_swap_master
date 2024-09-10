@@ -1,0 +1,16 @@
+
+set logscale y
+set key autotitle columnheader
+
+
+f7(x) = exp(a7*x + b7) + c7
+f6(x) = exp(a6*x + b6) + c6
+f5(x) = exp(a5*x + b5) + c5
+
+fit f7(x) "split_007" every ::1::7 via a7, b7, c7 
+fit f6(x) "split_006" every ::1::5 via a6, b6, c6 
+fit f5(x) "split_005" every ::1::4 via a5, b5, c5 
+plot exp(a7*x + b7)+ c7, "split_007" w linespoints,\
+ exp(a6*x + b6)+ c6, "split_006" w linespoints, \
+ exp(a5*x + b5)+ c5, "split_005" w linespoints
+
