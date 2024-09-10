@@ -1,10 +1,16 @@
 #include "../push_swap.h"
 
+//Benchmark if calling other function with reversed parameter is 
+//slower than rewriting logic
+//
+//Benchmark an array version
 void	ft_iswap(int *a, int *b)
 {
-	*a ^= *b;
-	*b ^= *a;
-	*a ^= *b;
+	int	tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = *a;
 }
 
 void	ps_op_pa(t_stk *a, t_stk *b)

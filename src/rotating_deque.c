@@ -47,7 +47,6 @@ void	stk_free_nodes(t_stk *stk)
 {
 	while (stk->len)
 	{
-//		ft_printf("%d\n", stk->head->val);
 		free(stk_pop_node(stk));
 	}
 }
