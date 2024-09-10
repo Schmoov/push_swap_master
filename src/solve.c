@@ -108,7 +108,7 @@ bool	is_stupid(t_op *sol, int curr, int a_len, int b_len)
 	}
 }
 
-bool	solve_backtrack_4real(int *parsed, int size, t_op *sol, int max_depth, int curr_depth, int b_len)
+bool	solve_iddfs_rec(int *parsed, int size, t_op *sol, int max_depth, int curr_depth, int b_len)
 {
 	if (curr_depth == max_depth)
 		return (is_solution(parsed, size, sol, max_depth));
@@ -120,41 +120,27 @@ bool	solve_backtrack_4real(int *parsed, int size, t_op *sol, int max_depth, int 
 		if (op == OP_PB) b_len+=2;
 		if (op == OP_SA) b_len--;
 		if (!is_stupid(sol, curr_depth, size - b_len, b_len))
-			if (solve_backtrack_4real(parsed, size, sol, max_depth, curr_depth + 1, b_len))
+			if (solve_iddfs_rec(parsed, size, sol, max_depth, curr_depth + 1, b_len))
 				return (true);
 	}
 	sol[curr_depth] = -1;
 	return (false);
 }
 		
-
-bool	solve_backtrack_depth(int *parsed, int size, t_op **sol, int depth)
-{
-	*sol = malloc(depth * sizeof(t_op));
-	for (int i = 0; i < depth; i++)
-		(*sol)[i] = -1;
-
-	return (solve_backtrack_4real(parsed, size, *sol, depth, 0, 0));
-}
-
 void	solve_backtrack(int *parsed, int size)
 {
 	int		depth;
-	t_op	*sol;
+	t_op	sol[32];
+	t_node	*beads;
 
+	beads = malloc(size*sizeof(t_node));
+	for (int i = 0; i < size; i++)
+		beads[i] = node_create(input[i]);
 	if (is_sorted(parsed, size))
-	{
-//		ft_printf("Id\n");
-//		ft_printf("---------------\n");
 		return ;
-	}
 	depth = 1;
 
-	while (!solve_backtrack_depth(parsed, size, &sol, depth))
-	{
-		free(sol);
+	while (!solve_iddfs_rec(parsed, size, sol, depth, 0, 0))
 		depth++;
-	}
 	print_sol(sol, depth);
-	free(sol);
 }

@@ -1,0 +1,8 @@
+cmd :
+time ./perm 6 | xargs -n6 ./push_swap | wc -l
+res : 5083
+
+old build : 34.56s
+new : 34.31s
+sol on stack no -1: 38.3s 
+
