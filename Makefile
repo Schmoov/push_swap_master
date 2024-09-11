@@ -1,4 +1,4 @@
-CC := cc -O3 -pg
+CC := cc -O3
 CFLAGS := 
 
 NAME := push_swap

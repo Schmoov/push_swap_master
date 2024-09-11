@@ -9,11 +9,15 @@ void	stks_init(t_node *nodes, int input_len, t_stk *stk_a, t_stk *stk_b)
 	stk_a->head = nodes;
 	stk_b->len = 0;
 	stk_b->head = NULL;
-	i = 0;
-	while (i < input_len)
+	nodes[0].prev = nodes + (input_len-1);
+	nodes[0].next = nodes + 1;
+	nodes[input_len-1].prev = nodes + (input_len-2);
+	nodes[input_len-1].next = nodes;
+	i = 1;
+	while (i < input_len - 1)
 	{
-		nodes[i].next =nodes + ((i + 1) % input_len);
-		nodes[i].prev =nodes + ((i - 1 + input_len) % input_len);
+		nodes[i].next = nodes + i + 1;
+		nodes[i].prev = nodes + i - 1;
 		i++;
 	}
 }
