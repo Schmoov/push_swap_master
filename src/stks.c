@@ -1,32 +1,25 @@
 #include "../push_swap.h"
 
-void	stks_init(int *input, int input_len, t_stk *stk_a, t_stk *stk_b)
+void	stks_init(t_node *nodes, int input_len, t_stk *stk_a, t_stk *stk_b)
 {
 	int		i;
 	t_node	*tmp;
 
-	stk_a->len = 0;
+	stk_a->len = input_len;
+	stk_a->head = nodes;
 	stk_b->len = 0;
 	stk_b->head = NULL;
-	i = input_len - 1;
-	while (i > -1)
+	i = 0;
+	while (i < input_len)
 	{
-		tmp = node_create(input[i]);
-		if (!tmp)
-		{
-			stk_free_nodes(stk_a);
-			stk_a->len = 0;
-			return ;
-		}
-		stk_push_node(stk_a, tmp);
-		i--;
+		nodes[i].next =nodes + ((i + 1) % input_len);
+		nodes[i].prev =nodes + ((i - 1 + input_len) % input_len);
+		i++;
 	}
 }
 
 void	stks_destroy(t_stk *stk_a, t_stk *stk_b)
 {
-	stk_free_nodes(stk_a);
-	stk_free_nodes(stk_b);
 }
 
 bool	stks_is_solved(t_stk *stk_a, t_stk *stk_b)

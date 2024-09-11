@@ -29,14 +29,6 @@ static t_op	*ll_to_op_arr(long long n)
 	return (res);
 }
 
-bool	is_sorted(int *parsed, int size)
-{
-	for (int i = 0; i < size - 1; i++)
-		if (parsed[i] > parsed[i+1])
-			return false;
-	return true;
-}
-
 void	print_sol(t_op *moves, int moves_len)
 {
 	int	i;
@@ -50,14 +42,14 @@ void	print_sol(t_op *moves, int moves_len)
 //	ft_printf("---------------\n");
 }
 
-void	solve_brute_force(int *parsed, int size)
+void	solve_brute_force(t_node *nodes, int size)
 {
 	long long	i;
 	t_op		*sol;
 
 	i = 0;
 	sol = ll_to_op_arr(i);
-	while (!is_solution(parsed, size, sol, ilog11(i)))
+	while (!is_solution(nodes, size, sol, ilog11(i)))
 	{
 		i++;
 		free(sol);
@@ -108,10 +100,10 @@ bool	is_stupid(t_op *sol, int curr, int a_len, int b_len)
 	}
 }
 
-bool	solve_iddfs_rec(int *parsed, int size, t_op *sol, int max_depth, int curr_depth, int b_len)
+bool	solve_iddfs_rec(t_node *nodes, int size, t_op *sol, int max_depth, int curr_depth, int b_len)
 {
 	if (curr_depth == max_depth)
-		return (is_solution(parsed, size, sol, max_depth));
+		return (is_solution(nodes, size, sol, max_depth));
 
 	for (t_op op = 0; op < NB_OP; op++)
 	{
@@ -120,27 +112,24 @@ bool	solve_iddfs_rec(int *parsed, int size, t_op *sol, int max_depth, int curr_d
 		if (op == OP_PB) b_len+=2;
 		if (op == OP_SA) b_len--;
 		if (!is_stupid(sol, curr_depth, size - b_len, b_len))
-			if (solve_iddfs_rec(parsed, size, sol, max_depth, curr_depth + 1, b_len))
+			if (solve_iddfs_rec(nodes, size, sol, max_depth, curr_depth + 1, b_len))
 				return (true);
 	}
 	sol[curr_depth] = -1;
 	return (false);
 }
 		
-void	solve_backtrack(int *parsed, int size)
+void	solve_backtrack(t_node *nodes, int size)
 {
 	int		depth;
 	t_op	sol[32];
-	t_node	*beads;
 
-	beads = malloc(size*sizeof(t_node));
-	for (int i = 0; i < size; i++)
-		beads[i] = node_create(input[i]);
-	if (is_sorted(parsed, size))
+	if (is_sorted(nodes, size))
 		return ;
 	depth = 1;
 
-	while (!solve_iddfs_rec(parsed, size, sol, depth, 0, 0))
+	while (!solve_iddfs_rec(nodes, size, sol, depth, 0, 0))
 		depth++;
 	print_sol(sol, depth);
+	free(nodes);
 }

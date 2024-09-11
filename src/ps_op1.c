@@ -27,14 +27,28 @@ void	ps_op_pb(t_stk *a, t_stk *b)
 
 void	ps_op_sa(t_stk *a, t_stk *b)
 {
+	t_node	*tmp;
+
 	if (a->len > 1)
-		ft_iswap(&(a->head->next->val), &(a->head->val));
+	{
+		tmp = stk_pop_node(a);
+		a->head = a->head->next;
+		stk_push_node(a, tmp);
+		a->head = a->head->prev;
+	}
 }
 
 void	ps_op_sb(t_stk *a, t_stk *b)
 {
+	t_node	*tmp;
+
 	if (b->len > 1)
-		ft_iswap(&(b->head->next->val), &(b->head->val));
+	{
+		tmp = stk_pop_node(b);
+		b->head = b->head->next;
+		stk_push_node(b, tmp);
+		b->head = b->head->prev;
+	}
 }
 
 void	ps_op_ss(t_stk *a, t_stk *b)

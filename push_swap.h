@@ -44,7 +44,7 @@ bool	ps_parse(int *res, char **nums, int size);
 bool	compress(int *res, int size);
 int		*parse_and_compress(char **nums, int size);
 
-void	stks_init(int *input, int input_len, t_stk *stk_a, t_stk *stk_b);
+void	stks_init(t_node *input, int input_len, t_stk *stk_a, t_stk *stk_b);
 void	stks_execute(t_op *moves, int moves_len, t_stk *stk_a, t_stk *stk_b);
 bool	stks_is_solved(t_stk *stk_a, t_stk *stk_b);
 void	stks_destroy(t_stk *stk_a, t_stk *stk_b);
@@ -62,7 +62,10 @@ void	ps_op_rr(t_stk *a, t_stk *b);
 void	ps_op_rra(t_stk *a, t_stk *b);
 void	ps_op_rrb(t_stk *a, t_stk *b);
 void	ps_op_rrr(t_stk *a, t_stk *b);
-bool	is_solution(int *input, int input_len, t_op *moves, int moves_len);
-void    solve_brute_force(int *parsed, int size); 
-void	solve_backtrack(int *parsed, int size);
+bool	is_solution(t_node *nodes, int input_len, t_op *moves, int moves_len);
+void    solve_brute_force(t_node *nodes, int size); 
+void	solve_backtrack(t_node *nodes, int size);
 #endif
+t_node	*parsed_to_nodes(int *parsed, int size);
+void	nodes_reset(t_node *nodes, int size);
+bool	is_sorted(t_node *nodes, int size);

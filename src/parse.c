@@ -92,3 +92,24 @@ int	*parse_and_compress(char **nums, int size)
 		return (free(res), NULL);
 	return (res);
 }
+
+t_node	*parsed_to_nodes(int *parsed, int size)
+{
+	t_node	*res;
+	int		i;
+
+	res = malloc(size * sizeof(t_node));
+	i = 0;
+	while (i < size)
+	{
+		res[i].val = parsed[i];
+		res[i].next = res + ((i + 1) % size);
+		res[i].prev = res + ((i - 1 + size) % size);
+		i++;
+	}
+	return (res);
+}
+
+void	nodes_reset(t_node *nodes, int size)
+{
+}
