@@ -11,4 +11,31 @@ old build mac : 59.9
 new build mac : 32 !!
 no modulo in init : 26s !!
 
+////
 
+Changing the order of ops.
+
+before time perm 6 wc l gives 10.45s
+distrib : 
+
+   1088 pa
+   1088 pb
+    910 ra
+     63 rr
+    802 rra
+     76 rrr
+    943 sa
+      3 sb
+    110 ss
+
+After i get 6s (!!!)
+distrib
+
+    705 pa
+    705 pb
+   1214 ra
+     26 rr
+    996 rra
+     23 rrr
+   1359 sa
+     55 ss

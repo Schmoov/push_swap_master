@@ -20,17 +20,17 @@ t_node	*stk_pop_node(t_stk *stk);
 void	stk_free_nodes(t_stk *stk);
 
 typedef enum e_op {
-	OP_PA,
-	OP_PB,
 	OP_SA,
-	OP_SB,
-	OP_SS,
 	OP_RA,
-	OP_RB,
-	OP_RR,
 	OP_RRA,
-	OP_RRB,
+	OP_PB,
+	OP_PA,
+	OP_SS,
 	OP_RRR,
+	OP_RR,
+	OP_SB,
+	OP_RB,
+	OP_RRB,
 	NB_OP
 }	t_op;
 
