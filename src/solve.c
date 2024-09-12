@@ -59,7 +59,7 @@ void	solve_brute_force(t_node *nodes, int size)
 	free(sol);
 }
 
-bool	is_stupid(t_op *sol, int curr, int a_len, int b_len)
+bool	is_stupid(t_op *sol, int curr, int max, int a_len, int b_len)
 {
 	switch (sol[curr])
 	{
@@ -94,7 +94,7 @@ bool	is_stupid(t_op *sol, int curr, int a_len, int b_len)
 	case OP_PA:
 		return(b_len < 0);
 	case OP_PB:
-		return(a_len < 0);
+		return(a_len < 0 || b_len >= (max-curr));
 	default:
 		__builtin_unreachable();
 	}
@@ -111,7 +111,7 @@ bool	solve_iddfs_rec(t_node *nodes, int size, t_op *sol, int max_depth, int curr
 		if (op == OP_PA) b_len--;
 		if (op == OP_PB) b_len+=2;
 		if (op == OP_SA) b_len--;
-		if (!is_stupid(sol, curr_depth, size - b_len, b_len))
+		if (!is_stupid(sol, curr_depth, max_depth, size - b_len, b_len))
 			if (solve_iddfs_rec(nodes, size, sol, max_depth, curr_depth + 1, b_len))
 				return (true);
 	}

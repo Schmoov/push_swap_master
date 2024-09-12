@@ -1,0 +1,304 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 23.86      4.49     4.49                             _init
+ 12.22      6.79     2.30 476024793     0.00     0.00  stks_execute
+ 12.01      9.05     2.26 3577355904     0.00     0.00  stk_pop_node
+  8.71     10.69     1.64 3577355904     0.00     0.00  stk_push_node
+  7.60     12.12     1.43 1008877601     0.00     0.00  ps_op_to_func
+  7.39     13.51     1.39 476024793     0.00     0.00  stks_init
+  4.89     14.43     0.92 1813563627     0.00     0.00  ps_op_pb
+  3.72     15.13     0.70       12     0.06     1.19  solve_iddfs_rec
+  3.19     15.73     0.60 754209000     0.00     0.00  is_stupid
+  2.34     16.17     0.44 299260917     0.00     0.00  ps_op_ss
+  2.02     16.55     0.38 450517058     0.00     0.00  ps_op_sa
+  1.75     16.88     0.33 476024793     0.00     0.00  is_solution
+  1.59     17.18     0.30 438905776     0.00     0.00  ps_op_ra
+  1.54     17.47     0.29 468735415     0.00     0.00  ps_op_rra
+  1.49     17.75     0.28 476024793     0.00     0.00  stks_is_solved
+  1.43     18.02     0.27 300016520     0.00     0.00  ps_op_sb
+  1.06     18.22     0.20 291692773     0.00     0.00  ps_op_rrr
+  0.85     18.38     0.16 476024793     0.00     0.00  stks_destroy
+  0.85     18.54     0.16 333987463     0.00     0.00  ps_op_rr
+  0.69     18.67     0.13 414736865     0.00     0.00  ps_op_pa
+  0.64     18.79     0.12 338305960     0.00     0.00  ps_op_rb
+  0.16     18.82     0.03 154122523     0.00     0.00  ps_op_rrb
+  0.00     18.82     0.00       12     0.00     0.00  ps_op_to_str
+  0.00     18.82     0.00        1     0.00     0.00  compress
+  0.00     18.82     0.00        1     0.00     0.00  is_sorted
+  0.00     18.82     0.00        1     0.00     0.00  parse_and_compress
+  0.00     18.82     0.00        1     0.00     0.00  parsed_to_nodes
+  0.00     18.82     0.00        1     0.00    14.33  solve_backtrack
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.05% of 18.82 seconds
+
+index % time    self  children    called     name
+                             544589244             solve_iddfs_rec [1]
+                0.70   13.63      12/12          solve_backtrack [2]
+[1]     76.1    0.70   13.63      12+544589244 solve_iddfs_rec [1]
+                0.33   12.70 476024793/476024793     is_solution [4]
+                0.60    0.00 754209000/754209000     is_stupid [14]
+                             544589244             solve_iddfs_rec [1]
+-----------------------------------------------
+                0.00   14.33       1/1           main [3]
+[2]     76.1    0.00   14.33       1         solve_backtrack [2]
+                0.70   13.63      12/12          solve_iddfs_rec [1]
+                0.00    0.00      12/12          ps_op_to_str [25]
+                0.00    0.00       1/1           is_sorted [27]
+-----------------------------------------------
+                                                 <spontaneous>
+[3]     76.1    0.00   14.33                 main [3]
+                0.00   14.33       1/1           solve_backtrack [2]
+                0.00    0.00       1/1           parse_and_compress [28]
+                0.00    0.00       1/1           parsed_to_nodes [29]
+-----------------------------------------------
+                0.33   12.70 476024793/476024793     solve_iddfs_rec [1]
+[4]     69.2    0.33   12.70 476024793         is_solution [4]
+                2.30    8.57 476024793/476024793     stks_execute [5]
+                1.39    0.00 476024793/476024793     stks_init [11]
+                0.28    0.00 476024793/476024793     stks_is_solved [19]
+                0.16    0.00 476024793/476024793     stks_destroy [21]
+-----------------------------------------------
+                2.30    8.57 476024793/476024793     is_solution [4]
+[5]     57.8    2.30    8.57 476024793         stks_execute [5]
+                0.92    1.15 1813563627/1813563627     ps_op_pb [8]
+                1.43    0.00 1008877601/1008877601     ps_op_to_func [10]
+                0.44    0.65 299260917/299260917     ps_op_ss [12]
+                1.02    0.00 2228300492/3577355904     stk_push_node [9]
+                0.38    0.49 450517058/450517058     ps_op_sa [13]
+                0.27    0.33 300016520/300016520     ps_op_sb [15]
+                0.13    0.26 414736865/414736865     ps_op_pa [16]
+                0.30    0.00 438905776/438905776     ps_op_ra [17]
+                0.29    0.00 468735415/468735415     ps_op_rra [18]
+                0.20    0.00 291692773/291692773     ps_op_rrr [20]
+                0.16    0.00 333987463/333987463     ps_op_rr [22]
+                0.12    0.00 338305960/338305960     ps_op_rb [23]
+                0.03    0.00 154122523/154122523     ps_op_rrb [24]
+-----------------------------------------------
+                                                 <spontaneous>
+[6]     23.9    4.49    0.00                 _init [6]
+-----------------------------------------------
+                0.19    0.00 300016520/3577355904     ps_op_sb [15]
+                0.26    0.00 414736865/3577355904     ps_op_pa [16]
+                0.28    0.00 450517058/3577355904     ps_op_sa [13]
+                0.38    0.00 598521834/3577355904     ps_op_ss [12]
+                1.15    0.00 1813563627/3577355904     ps_op_pb [8]
+[7]     12.0    2.26    0.00 3577355904         stk_pop_node [7]
+-----------------------------------------------
+                0.92    1.15 1813563627/1813563627     stks_execute [5]
+[8]     11.0    0.92    1.15 1813563627         ps_op_pb [8]
+                1.15    0.00 1813563627/3577355904     stk_pop_node [7]
+-----------------------------------------------
+                0.14    0.00 300016520/3577355904     ps_op_sb [15]
+                0.21    0.00 450517058/3577355904     ps_op_sa [13]
+                0.27    0.00 598521834/3577355904     ps_op_ss [12]
+                1.02    0.00 2228300492/3577355904     stks_execute [5]
+[9]      8.7    1.64    0.00 3577355904         stk_push_node [9]
+-----------------------------------------------
+                1.43    0.00 1008877601/1008877601     stks_execute [5]
+[10]     7.6    1.43    0.00 1008877601         ps_op_to_func [10]
+-----------------------------------------------
+                1.39    0.00 476024793/476024793     is_solution [4]
+[11]     7.4    1.39    0.00 476024793         stks_init [11]
+-----------------------------------------------
+                0.44    0.65 299260917/299260917     stks_execute [5]
+[12]     5.8    0.44    0.65 299260917         ps_op_ss [12]
+                0.38    0.00 598521834/3577355904     stk_pop_node [7]
+                0.27    0.00 598521834/3577355904     stk_push_node [9]
+-----------------------------------------------
+                0.38    0.49 450517058/450517058     stks_execute [5]
+[13]     4.6    0.38    0.49 450517058         ps_op_sa [13]
+                0.28    0.00 450517058/3577355904     stk_pop_node [7]
+                0.21    0.00 450517058/3577355904     stk_push_node [9]
+-----------------------------------------------
+                0.60    0.00 754209000/754209000     solve_iddfs_rec [1]
+[14]     3.2    0.60    0.00 754209000         is_stupid [14]
+-----------------------------------------------
+                0.27    0.33 300016520/300016520     stks_execute [5]
+[15]     3.2    0.27    0.33 300016520         ps_op_sb [15]
+                0.19    0.00 300016520/3577355904     stk_pop_node [7]
+                0.14    0.00 300016520/3577355904     stk_push_node [9]
+-----------------------------------------------
+                0.13    0.26 414736865/414736865     stks_execute [5]
+[16]     2.1    0.13    0.26 414736865         ps_op_pa [16]
+                0.26    0.00 414736865/3577355904     stk_pop_node [7]
+-----------------------------------------------
+                0.30    0.00 438905776/438905776     stks_execute [5]
+[17]     1.6    0.30    0.00 438905776         ps_op_ra [17]
+-----------------------------------------------
+                0.29    0.00 468735415/468735415     stks_execute [5]
+[18]     1.5    0.29    0.00 468735415         ps_op_rra [18]
+-----------------------------------------------
+                0.28    0.00 476024793/476024793     is_solution [4]
+[19]     1.5    0.28    0.00 476024793         stks_is_solved [19]
+-----------------------------------------------
+                0.20    0.00 291692773/291692773     stks_execute [5]
+[20]     1.1    0.20    0.00 291692773         ps_op_rrr [20]
+-----------------------------------------------
+                0.16    0.00 476024793/476024793     is_solution [4]
+[21]     0.9    0.16    0.00 476024793         stks_destroy [21]
+-----------------------------------------------
+                0.16    0.00 333987463/333987463     stks_execute [5]
+[22]     0.9    0.16    0.00 333987463         ps_op_rr [22]
+-----------------------------------------------
+                0.12    0.00 338305960/338305960     stks_execute [5]
+[23]     0.6    0.12    0.00 338305960         ps_op_rb [23]
+-----------------------------------------------
+                0.03    0.00 154122523/154122523     stks_execute [5]
+[24]     0.2    0.03    0.00 154122523         ps_op_rrb [24]
+-----------------------------------------------
+                0.00    0.00      12/12          solve_backtrack [2]
+[25]     0.0    0.00    0.00      12         ps_op_to_str [25]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_and_compress [28]
+[26]     0.0    0.00    0.00       1         compress [26]
+-----------------------------------------------
+                0.00    0.00       1/1           solve_backtrack [2]
+[27]     0.0    0.00    0.00       1         is_sorted [27]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[28]     0.0    0.00    0.00       1         parse_and_compress [28]
+                0.00    0.00       1/1           compress [26]
+-----------------------------------------------
+                0.00    0.00       1/1           main [3]
+[29]     0.0    0.00    0.00       1         parsed_to_nodes [29]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2022 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [6] _init                  [23] ps_op_rb                [2] solve_backtrack
+  [26] compress               [22] ps_op_rr                [1] solve_iddfs_rec
+   [4] is_solution            [18] ps_op_rra               [7] stk_pop_node
+  [27] is_sorted              [24] ps_op_rrb               [9] stk_push_node
+  [14] is_stupid              [20] ps_op_rrr              [21] stks_destroy
+  [28] parse_and_compress     [13] ps_op_sa                [5] stks_execute
+  [29] parsed_to_nodes        [15] ps_op_sb               [11] stks_init
+  [16] ps_op_pa               [12] ps_op_ss               [19] stks_is_solved
+   [8] ps_op_pb               [10] ps_op_to_func
+  [17] ps_op_ra               [25] ps_op_to_str

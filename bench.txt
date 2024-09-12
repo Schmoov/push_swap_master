@@ -5,6 +5,7 @@ res : 5083
 old build : 34.56s
 new : 34.31s
 sol on stack no -1: 38.3s 
+postmac : 15s !!
 
 old build mac : 59.9
 new build mac : 32 !!
