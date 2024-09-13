@@ -1,3 +1,10 @@
+big sort.
+
+v1 100 min :540 max :695 mean :619.693
+   500 min :3965 max :4672 mean :4336.17
+
+
+
 cmd :
 time ./perm 6 | xargs -n6 ./push_swap | wc -l
 res : 5083
@@ -59,3 +66,4 @@ distrib perm 7 (after reordering OPs)
     645 rrr
    9383 sa
     995 ss
+
