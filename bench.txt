@@ -39,3 +39,23 @@ distrib
      23 rrr
    1359 sa
      55 ss
+
+
+5op : perm 6 1.17 0.75
+            7 264/119
+    tricky    19.06/6.24
+opti : perm 6 6.32/5.44
+            7 ???/4291 (1h11)
+      tricky 23++
+
+distrib perm 7 (after reordering OPs)
+
+
+   8454 pa
+   8454 pb
+   9856 ra
+    557 rr
+   8559 rra
+    645 rrr
+   9383 sa
+    995 ss

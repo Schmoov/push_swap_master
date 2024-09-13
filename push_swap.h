@@ -34,6 +34,12 @@ typedef enum e_op {
 	NB_OP
 }	t_op;
 
+typedef struct	s_sol {
+	t_op		*val;
+	int			len;
+	int			size;
+}				t_sol;
+
 typedef void	(*t_ps_op_handler)(t_stk *stk_a, t_stk *stk_b);
 t_ps_op_handler	ps_op_to_func(t_op move);
 //void	(*ps_op_to_func(t_op move))(t_stk *stk_a, t_stk *stk_b);
@@ -69,3 +75,9 @@ void	solve_backtrack(t_node *nodes, int size);
 t_node	*parsed_to_nodes(int *parsed, int size);
 void	nodes_reset(t_node *nodes, int size);
 bool	is_sorted(t_node *nodes, int size);
+void	sol_init(t_sol *sol);
+void	sol_realloc(t_sol *sol);
+void	sol_append_one(t_sol *sol, t_op op);
+void	sol_print(t_sol	sol);
+void	sol_destroy(t_sol sol);
+t_sol	solve_big(t_node *parsed, int size);
