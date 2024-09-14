@@ -1,12 +1,14 @@
 #include "../push_swap.h"
 
+
 void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 {
 	int	i;
 	int	lo;
 	int	mid;
+	int	rb_debt = 0;
 
-	while (a->len > 1)
+	while (a->len > 2)
 	{
 		i = 0;
 		int len = a->len;
@@ -16,20 +18,34 @@ void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 		{
 			if (a->head->val <= lo)
 			{
+				while (rb_debt)
+				{
+					ps_op_rb(a,b);
+					sol_append_one(sol, OP_RB);
+					rb_debt--;
+				}
 				ps_op_pb(a,b);
 				sol_append_one(sol, OP_PB);
 			}
 			else if (a->head->val <= mid)
 			{
 				ps_op_pb(a,b);
-				ps_op_rb(a,b);
 				sol_append_one(sol, OP_PB);
-				sol_append_one(sol, OP_RB);
+				rb_debt++;
 			}
 			else
 			{
-				ps_op_ra(a,b);
-				sol_append_one(sol, OP_RA);
+				if (rb_debt)
+				{
+					ps_op_rr(a,b);
+					sol_append_one(sol, OP_RR);
+					rb_debt--;
+				}
+				else
+				{
+					ps_op_ra(a,b);
+					sol_append_one(sol, OP_RA);
+				}
 			}
 			i++;
 		}
@@ -42,6 +58,10 @@ int		insert_cost(int pos, t_stk *a, t_stk *b)
 	int posA = -1;
 	int posMin;
 	int val = b->head->val;
+	int size = a->len + b->len;
+	if (3*a->len <= b->len && val <= (3*size)/4) return INT_MAX;
+	if (a->len <= b->len && val <= size/2) return INT_MAX;
+	if (a->len <= 3*b->len && val <= size/4) return INT_MAX;
 
 	for (int i = 0; i < a->len; i++)
 	{
@@ -59,12 +79,18 @@ int		insert_cost(int pos, t_stk *a, t_stk *b)
 
 void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 {
+
+	int val;
 	if (pos <= b->len - pos)
 	{
 		for (int i = 0; i < pos; i++)
 		{
 			ps_op_rb(a,b);
-			sol_append_one(sol, OP_RB);
+		}
+		val = b->head->val;
+		for (int i = 0; i < pos; i++)
+		{
+			ps_op_rrb(a,b);
 		}
 	}
 	else
@@ -72,11 +98,15 @@ void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 		for (int i = 0; i < b->len - pos; i++)
 		{
 			ps_op_rrb(a,b);
-			sol_append_one(sol, OP_RRB);
+		}
+		val = b->head->val;
+		for (int i = 0; i < pos; i++)
+		{
+			ps_op_rb(a,b);
 		}
 	}
+	int rb_debt = ((pos<= b->len-pos) ?pos:pos-b->len);
 
-	int val = b->head->val;
 	int posA = -1;
 	int posMin;
 	for (int i = 0; i < a->len; i++)
@@ -90,18 +120,60 @@ void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 	if (posA == -1) posA = posMin;
 	if (posA <= a->len - posA)
 	{
+		while (rb_debt < 0)
+		{
+			ps_op_rrb(a,b);
+			sol_append_one(sol, OP_RRB);
+			rb_debt++;
+		}
 		for (int i = 0; i < posA; i++)
 		{
-			ps_op_ra(a,b);
-			sol_append_one(sol, OP_RA);
+			if (rb_debt)
+			{
+				ps_op_rr(a,b);
+				sol_append_one(sol, OP_RR);
+				rb_debt--;
+			}
+			else
+			{
+				ps_op_ra(a,b);
+				sol_append_one(sol, OP_RA);
+			}
+		}
+		while (rb_debt)
+		{
+			ps_op_rb(a,b);
+			sol_append_one(sol, OP_RB);
+			rb_debt--;
 		}
 	}
 	else
 	{
+		while (rb_debt>0)
+		{
+			ps_op_rb(a,b);
+			sol_append_one(sol, OP_RB);
+			rb_debt--;
+		}
 		for (int i = 0; i < a->len - posA; i++)
 		{
-			ps_op_rra(a,b);
-			sol_append_one(sol, OP_RRA);
+			if (rb_debt)
+			{
+				ps_op_rrr(a,b);
+				sol_append_one(sol, OP_RRR);
+				rb_debt++;
+			}
+			else
+			{
+				ps_op_rra(a,b);
+				sol_append_one(sol, OP_RRA);
+			}
+		}
+		while (rb_debt)
+		{
+			ps_op_rrb(a,b);
+			sol_append_one(sol, OP_RRB);
+			rb_debt++;
 		}
 	}
 	ps_op_pa(a,b);
@@ -110,10 +182,11 @@ void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 
 void	solve_big_merge(t_stk *a, t_stk *b, t_sol *sol)
 {
-	ps_op_pa(a,b);
-	sol_append_one(sol, OP_PA);
-	ps_op_pa(a,b);
-	sol_append_one(sol, OP_PA);
+	while (a->len < 2)
+	{
+		ps_op_pa(a,b);
+		sol_append_one(sol, OP_PA);
+	}
 	while (b->len)
 	{
 		int	pos;

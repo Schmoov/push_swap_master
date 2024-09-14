@@ -1,10 +1,13 @@
 big sort.
 
-v1 100 min :540 max :695 mean :619.693
-   500 min :3965 max :4672 mean :4336.17
+v1                    100 min :540 max :695 mean :619.693
+                      500 min :3965 max :4672 mean :4336.17
 
+rr on divide          100 min :514 max :659 mean :588.858
+                      500 min :3814 max :4535 mean :4182.9
 
-
+meh bucket forcing    min :545 max :653 mean :595.529
+                      500 min :3878 max :4467 mean :4144.2
 cmd :
 time ./perm 6 | xargs -n6 ./push_swap | wc -l
 res : 5083
