@@ -1,19 +1,18 @@
 #include "../push_swap.h"
 
-
 void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 {
 	int	i;
 	int	lo;
-	int	mid;
+	int	hi;
 	int	rb_debt = 0;
 
 	while (a->len > 2)
 	{
 		i = 0;
 		int len = a->len;
-		lo = b->len + a->len / 4 ;
-		mid = b->len + a->len / 2 ;
+		lo = a->len / 4 + b->len / 2;
+		hi = 3 * a->len / 4 + b->len / 2;
 		while (i < len)
 		{
 			if (a->head->val <= lo)
@@ -27,7 +26,7 @@ void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 				ps_op_pb(a,b);
 				sol_append_one(sol, OP_PB);
 			}
-			else if (a->head->val <= mid)
+			else if (a->head->val >= hi)
 			{
 				ps_op_pb(a,b);
 				sol_append_one(sol, OP_PB);
@@ -52,16 +51,13 @@ void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 	}
 }
 
+#include <math.h>
 int		insert_cost(int pos, t_stk *a, t_stk *b)
 {
-	int res = (pos <= b->len - pos ? pos : b->len - pos);
+	int res;
 	int posA = -1;
 	int posMin;
 	int val = b->head->val;
-	int size = a->len + b->len;
-	if (3*a->len <= b->len && val <= (3*size)/4) return INT_MAX;
-	if (a->len <= b->len && val <= size/2) return INT_MAX;
-	if (a->len <= 3*b->len && val <= size/4) return INT_MAX;
 
 	for (int i = 0; i < a->len; i++)
 	{
@@ -72,41 +68,29 @@ int		insert_cost(int pos, t_stk *a, t_stk *b)
 		ps_op_ra(a,b);
 	}
 	if (posA == -1) posA = posMin;
-	if (a->len - posA < posA) posA = a->len - posA;
-	res += posA;
-	return (res);
+	if (pos > b->len - pos) pos = pos - b->len;
+	if (posA > a->len - posA) posA = posA - a->len;
+
+	if (pos >= 0 && posA >= 0) return fmax(pos,posA);
+	if (pos <= 0 && posA <= 0) return fmax(-pos,-posA);
+	/*
+	if (pos > 0 && posA < 0) return fmin(pos-posA, fmin(fmax(pos, a->size + posA), fmax(b->size-pos, -posA)));
+	return fmin(posA-pos, fmin(fmax(posA, b->size + pos), fmax(a->size-posA, -pos)));
+	*/
+	return (fabs(pos) + fabs(posA));
 }
 
 void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 {
-
-	int val;
-	if (pos <= b->len - pos)
+	int c_rb = 0;
+	int c_ra = 0;
+	for (int i = 0; i < pos; i++)
 	{
-		for (int i = 0; i < pos; i++)
-		{
-			ps_op_rb(a,b);
-		}
-		val = b->head->val;
-		for (int i = 0; i < pos; i++)
-		{
-			ps_op_rrb(a,b);
-		}
+		ps_op_rb(a,b);
+		c_rb++;
 	}
-	else
-	{
-		for (int i = 0; i < b->len - pos; i++)
-		{
-			ps_op_rrb(a,b);
-		}
-		val = b->head->val;
-		for (int i = 0; i < pos; i++)
-		{
-			ps_op_rb(a,b);
-		}
-	}
-	int rb_debt = ((pos<= b->len-pos) ?pos:pos-b->len);
 
+	int val = b->head->val;
 	int posA = -1;
 	int posMin;
 	for (int i = 0; i < a->len; i++)
@@ -118,62 +102,73 @@ void	fast_insert(int pos, t_stk *a, t_stk *b, t_sol *sol)
 		ps_op_ra(a,b);
 	}
 	if (posA == -1) posA = posMin;
-	if (posA <= a->len - posA)
+	for (int i = 0; i < posA; i++)
 	{
-		while (rb_debt < 0)
+		ps_op_ra(a,b);
+		c_ra++;
+	}
+	if (c_rb > b->len - c_rb) c_rb = c_rb - b->len;
+	if (c_ra > a->len - c_ra) c_ra = c_ra - a->len;
+
+	if (c_rb >= 0 && c_ra >= 0)
+	{
+		while(c_rb && c_ra)
 		{
-			ps_op_rrb(a,b);
-			sol_append_one(sol, OP_RRB);
-			rb_debt++;
+			sol_append_one(sol, OP_RR);
+			c_rb--;
+			c_ra--;
 		}
-		for (int i = 0; i < posA; i++)
+		while(c_rb)
 		{
-			if (rb_debt)
-			{
-				ps_op_rr(a,b);
-				sol_append_one(sol, OP_RR);
-				rb_debt--;
-			}
-			else
-			{
-				ps_op_ra(a,b);
-				sol_append_one(sol, OP_RA);
-			}
-		}
-		while (rb_debt)
-		{
-			ps_op_rb(a,b);
 			sol_append_one(sol, OP_RB);
-			rb_debt--;
+			c_rb--;
+		}
+		while(c_ra)
+		{
+			sol_append_one(sol, OP_RA);
+			c_ra--;
+		}
+	}
+	else if (c_rb <= 0 && c_ra <= 0) 
+	{
+		while(c_rb && c_ra)
+		{
+			sol_append_one(sol, OP_RRR);
+			c_rb++;
+			c_ra++;
+		}
+		while(c_rb)
+		{
+			sol_append_one(sol, OP_RRB);
+			c_rb++;
+		}
+		while(c_ra)
+		{
+			sol_append_one(sol, OP_RRA);
+			c_ra++;
 		}
 	}
 	else
 	{
-		while (rb_debt>0)
+		while(c_rb>0)
 		{
-			ps_op_rb(a,b);
 			sol_append_one(sol, OP_RB);
-			rb_debt--;
+			c_rb--;
 		}
-		for (int i = 0; i < a->len - posA; i++)
+		while(c_rb<0)
 		{
-			if (rb_debt)
-			{
-				ps_op_rrr(a,b);
-				sol_append_one(sol, OP_RRR);
-				rb_debt++;
-			}
-			else
-			{
-				ps_op_rra(a,b);
-				sol_append_one(sol, OP_RRA);
-			}
-		}
-		while (rb_debt)
-		{
-			ps_op_rrb(a,b);
 			sol_append_one(sol, OP_RRB);
-			rb_debt++;
+			c_rb++;
+		}
+		while(c_ra>0)
+		{
+			sol_append_one(sol, OP_RA);
+			c_ra--;
+		}
+		while(c_ra<0)
+		{
+			sol_append_one(sol, OP_RRA);
+			c_ra++;
 		}
 	}
 	ps_op_pa(a,b);

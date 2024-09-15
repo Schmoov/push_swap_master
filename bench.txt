@@ -6,6 +6,12 @@ v1                    100 min :540 max :695 mean :619.693
 rr on divide          100 min :514 max :659 mean :588.858
                       500 min :3814 max :4535 mean :4182.9
 
+divide lo-hi          100 min :502 max :660 mean :586.916
+                      500 min :3830 max :4565 mean :4152.42
+
+rr on merge           100 min :495 max :642 mean :559.649
+                      500 min :3419 max :4158 mean :3819.94
+
 meh bucket forcing    min :545 max :653 mean :595.529
                       500 min :3878 max :4467 mean :4144.2
 cmd :
