@@ -177,7 +177,7 @@ void	solve_big_merge(t_stk *a, t_stk *b, t_sol *sol)
 		for (int i = 0; i < b->len; i++)
 		{
 			int cost = insert_cost(i, a, b);
-			if (b->head->val >= b->len - 1) cost -= b->head->val - b->len + 1;
+			if (b->head->val >= b->len - 1) cost -= 3*(b->head->val - b->len + 1)/4;
 			if (cost < best || (cost==best && b->head->val > best_val))
 			{
 				pos = i;

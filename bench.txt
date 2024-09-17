@@ -18,9 +18,13 @@ bucket forcing lolo   100 min :501 max :609 mean :558.25
 first div third       100 min :510 max :613 mean :570.277
 then halfes           500 min :3508 max :4031 mean :3760.27
 
-biaise hi nums        100 min :510 max :613 mean :570.277
+biaise hi nums        100 min :485 max :557 mean :519.624
                       500 min :3472 max :3728 mean :3598.29
-  
+
+half biaise           100 min :487 max :588 mean :533.77
+                      500 min :3367 max :3754 mean :3539.17
+3/4 biaise            very similar
+
 cmd :
 time ./perm 6 | xargs -n6 ./push_swap | wc -l
 res : 5083
