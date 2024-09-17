@@ -3,16 +3,21 @@
 void	solve_big_divide(t_stk *a, t_stk *b, t_sol *sol)
 {
 	int	i;
-	int	lo;
-	int	hi;
+	int lo = a->len / 6;
+	int hi = a->len / 3;
+	static bool first_pass = true;
 	int	rb_debt = 0;
 
 	while (a->len > 2)
 	{
 		i = 0;
 		int len = a->len;
-		lo = a->len / 4 + b->len;
-		hi = a->len / 2 + b->len;
+		if (!first_pass)
+		{
+			lo = a->len / 4 + b->len;
+			hi = a->len / 2 + b->len;
+		}
+		first_pass = false;
 		while (i < len)
 		{
 			if (a->head->val < lo)
@@ -59,12 +64,12 @@ int		insert_cost(int pos, t_stk *a, t_stk *b)
 	int posMin;
 	int val = b->head->val;
 	int size = a->len + b->len;
-	if (b->len > size/2 && val < size/2) return (INT_MAX);
-	if (b->len > size/4 && val < size/4) return (INT_MAX);
-	if (b->len > 5*size/8 && val < 5*size/8) return (INT_MAX);
+	if (b->len > size/3 && val < size/3) return (INT_MAX);
+	if (b->len > size/6 && val < size/6) return (INT_MAX);
+	if (b->len > 2*size/3 && val < 2*size/3) return (INT_MAX);
+	if (b->len > 1*size/2 && val < 1*size/2) return (INT_MAX);
+	if (b->len > 5*size/6 && val < 5*size/6) return (INT_MAX);
 	if (b->len > 3*size/4 && val < 3*size/4) return (INT_MAX);
-	if (b->len > 13*size/16 && val < 13*size/16) return (INT_MAX);
-	if (b->len > 7*size/8 && val < 7*size/8) return (INT_MAX);
 
 	for (int i = 0; i < a->len; i++)
 	{
@@ -172,6 +177,7 @@ void	solve_big_merge(t_stk *a, t_stk *b, t_sol *sol)
 		for (int i = 0; i < b->len; i++)
 		{
 			int cost = insert_cost(i, a, b);
+			if (b->head->val >= b->len - 1) cost -= b->head->val - b->len + 1;
 			if (cost < best || (cost==best && b->head->val > best_val))
 			{
 				pos = i;

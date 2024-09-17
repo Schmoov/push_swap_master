@@ -12,8 +12,15 @@ divide lo-hi          100 min :502 max :660 mean :586.916
 rr on merge           100 min :495 max :642 mean :559.649
                       500 min :3419 max :4158 mean :3819.94
 
-meh bucket forcing    min :545 max :653 mean :595.529
-                      500 min :3878 max :4467 mean :4144.2
+bucket forcing lolo   100 min :501 max :609 mean :558.25
+                      500 min :3453 max :4043 mean :3765.1
+
+first div third       100 min :510 max :613 mean :570.277
+then halfes           500 min :3508 max :4031 mean :3760.27
+
+biaise hi nums        100 min :510 max :613 mean :570.277
+                      500 min :3472 max :3728 mean :3598.29
+  
 cmd :
 time ./perm 6 | xargs -n6 ./push_swap | wc -l
 res : 5083
