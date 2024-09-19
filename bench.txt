@@ -23,8 +23,22 @@ biaise hi nums        100 min :485 max :557 mean :519.624
 
 half biaise           100 min :487 max :588 mean :533.77
                       500 min :3367 max :3754 mean :3539.17
+
 3/4 biaise            very similar
 
+5/8                   100 min :496 max :574 mean :528.85
+                      500 min :3394 max :3701 mean :3526.96
+
+RAW 570/3762
+10cost/delta+11 541/3604
+20              555/3656
+5               529/3596
+2               520/3776
+3               520/3666
+
+7               533/3590
+\
+20* -1/5 3537
 cmd :
 time ./perm 6 | xargs -n6 ./push_swap | wc -l
 res : 5083
